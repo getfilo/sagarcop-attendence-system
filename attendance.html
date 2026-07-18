@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagar College of Pharmacy — Faculty Attendance Terminal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { 
+            --brand-primary: #0A4D34; 
+            --brand-gold: #C5A880; 
+            --brand-dark: #111827; 
+            --surface: #ffffff; 
+            --bg: #F9FAFB; 
+            --text-main: #1F2937; 
+            --text-muted: #6B7280; 
+            --border: #E5E7EB; 
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; -webkit-font-smoothing: antialiased; }
+        
+        /* --- NEW STEM GLOBE MVP PROMPT INTERACTION OVERLAY --- */
+        #mvpShieldOverlay { position: fixed; inset: 0; background: #030712; z-index: 100000; display: flex; align-items: center; justify-content: center; padding: 24px; }
+        .mvp-container { background: #ffffff; width: 100%; max-width: 480px; padding: 40px; border-radius: 24px; text-align: center; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border-top: 5px solid #DC2626; }
+        .mvp-logo { height: 64px; width: auto; object-fit: contain; margin-bottom: 24px; }
+        .mvp-title { font-size: 1.35rem; font-weight: 800; color: #111827; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .mvp-badge { background: #FEF2F2; color: #DC2626; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; display: inline-block; margin-bottom: 20px; border: 1px solid #FEE2E2; }
+        .mvp-body { color: #4B5563; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; font-weight: 500; }
+        .mvp-contact { font-weight: 700; color: #2563EB; text-decoration: none; display: block; margin-top: 8px; }
+        .mvp-agree-btn { background: #111827; color: #ffffff; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .mvp-agree-btn:hover { background: #1F2937; transform: translateY(-1px); }
+
+        header { height: 100px; background: var(--surface); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 1px solid var(--border); }
+        .logo-group { display: flex; align-items: center; gap: 20px; }
+        .logo-img { height: 60px; width: auto; object-fit: contain; }
+        .header-divider { height: 40px; width: 1px; background: var(--border); }
+        .header-title h1 { font-size: 1.3rem; font-weight: 700; color: var(--brand-dark); }
+        .header-title p { font-size: 0.85rem; color: var(--brand-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+        .clock-ticker { font-size: 0.85rem; font-weight: 700; color: var(--brand-primary); background: #E6F4EA; padding: 10px 20px; border-radius: 99px; border: 1px solid rgba(10,77,52,0.08); }
+        
+        main { max-width: 1280px; width: 100%; margin: 40px auto; padding: 0 32px; flex: 1; display: flex; flex-direction: column; gap: 32px; }
+        .card { background: var(--surface); border-radius: 16px; padding: 32px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        
+        .selector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; background: #FFF; border-left: 5px solid var(--brand-gold); }
+        .selector-label { font-weight: 700; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .selector-box { padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); font-size: 1rem; width: 100%; background: #F9FAFB; margin-top: 8px; outline: none; color: var(--brand-dark); font-weight: 600; }
+        
+        .panel-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 16px; }
+        .search-wrap { position: relative; width: 360px; }
+        .search-wrap i { position: absolute; left: 16px; top: 15px; color: var(--text-muted); font-size: 1rem; }
+        .search-box { width: 100%; padding: 13px 13px 13px 48px; border: 1px solid var(--border); border-radius: 10px; outline: none; background: #F9FAFB; font-size: 0.95rem; }
+        
+        .table-wrap { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { padding: 16px 20px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 16px 20px; border-bottom: 1px solid var(--border); font-size: 0.95rem; vertical-align: middle; }
+
+        .cta-group { display: flex; gap: 4px; background: #F3F4F6; padding: 4px; border-radius: 10px; border: 1px solid var(--border); width: fit-content; }
+        .cta-btn { padding: 10px 24px; border-radius: 8px; border: none; background: transparent; font-weight: 700; cursor: pointer; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
+        input[type="radio"]:checked + .present-btn { background: var(--brand-primary); color: #fff; }
+        input[type="radio"]:checked + .absent-btn { background: #C5221F; color: #fff; }
+        .hidden-radio { display: none; }
+
+        .action-flex { display: flex; justify-content: flex-end; gap: 16px; margin-top: 32px; border-top: 1px solid var(--border); padding-top: 24px; }
+        .btn-submit { background: var(--brand-primary); color: #fff; border: none; padding: 14px 32px; font-weight: 600; border-radius: 10px; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        
+        footer { background: var(--surface); text-align: center; padding: 28px; font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--border); font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <!-- MVP ENTRY POINT GUARD -->
+    <div id="mvpShieldOverlay">
+        <div class="mvp-container">
+            <img src="stemglobe.png" alt="STEM Globe Technologies Logo" class="mvp-logo">
+            <h2 class="mvp-title">System Caution Notice</h2>
+            <div class="mvp-badge">MVP Phase Active</div>
+            <p class="mvp-body">
+                This software management system is currently under an engineered **MVP Phase** owned and maintained exclusively by <strong>STEM Globe Technologies</strong>. For any technical disruptions, core errors, or assistance, please reach out to us at:
+                <a href="mailto:stemglobe.official@gmail.com" class="mvp-contact">stemglobe.official@gmail.com</a>
+            </p>
+            <button id="mvpAcceptBtn" class="mvp-agree-btn">I Agree & Proceed <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-group">
+            <img src="SCOP" alt="SCOP" class="logo-img">
+            <div class="header-divider"></div>
+            <div class="header-title">
+                <h1>Sagar College of Pharmacy</h1>
+                <p>Faculty Attendance Management Terminal</p>
+            </div>
+        </div>
+        <div class="clock-ticker" id="liveClockDisplay">🕒 Connecting to Core Time Synchronization...</div>
+        <img src="SBG.webp" alt="SBG" class="logo-img">
+    </header>
+
+    <main>
+        <div class="card selector-grid">
+            <div>
+                <span class="selector-label">Session Target Date</span>
+                <input type="date" id="attendanceDatePicker" class="selector-box" style="margin-top:8px; width:100%;">
+            </div>
+            <div>
+                <span class="selector-label">Target Academic Batch</span>
+                <select id="yearSelector" class="selector-box">
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year" selected>2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                    <option value="Diploma">Diploma</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="panel-head">
+                <h3 style="font-size:1.2rem; font-weight:700; color:var(--brand-dark);"><i class="fa-solid fa-clipboard-user" style="color:var(--brand-primary); margin-right:8px;"></i> Batch Roster Verification</h3>
+                <div class="search-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="attendanceSearchBox" class="search-box" placeholder="Filter roster by candidate details...">
+                </div>
+            </div>
+
+            <form id="attendanceSheetForm">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Roll Number</th>
+                                <th>Student Name</th>
+                                <th>Allocated Section</th>
+                                <th style="width: 240px; text-align: center;">Roll Call Registry Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceRosterBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="action-flex">
+                    <button type="submit" id="saveAttendanceBtn" class="btn-submit"><i class="fa-solid fa-cloud-arrow-up"></i> Save & Secure to Inbuilt Ledger</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>All Rights Reserved | Sagar College of Pharmacy | 2026 Developed by PixelWeb</footer>
+
+    <script>
+        document.getElementById('attendanceDatePicker').value = new Date().toISOString().split('T')[0];
+        function runSystemTime() {
+            const now = new Date();
+            document.getElementById('liveClockDisplay').innerText = `🕒 Terminal Clock Sync: ${now.toLocaleTimeString()}`;
+        }
+        setInterval(runSystemTime, 1000);
+        runSystemTime();
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, query, where, onSnapshot, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBljkKXqZtGH-tY5ucY6XyUFJxy428BMgU",
+            authDomain: "scop-sgt.firebaseapp.com",
+            projectId: "scop-sgt",
+            storageBucket: "scop-sgt.firebasestorage.app",
+            messagingSenderId: "334460062741",
+            appId: "1:334460062741:web:841659264f68a86fa4d21c",
+            measurementId: "G-36J4HN7FZP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        let activeQueryUnsubscribe = null;
+
+        // Core Global Sensing System Pipe
+        async function logGlobalAction(type, msg) {
+            try {
+                const lid = "log_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+                await setDoc(doc(db, "system_logs", lid), {
+                    sourcePanel: "Faculty Terminal",
+                    eventType: type.toUpperCase(),
+                    message: msg,
+                    timestamp: serverTimestamp()
+                });
+            } catch(ex) { console.error(ex); }
+        }
+
+        // MVP Portal Gateway Acknowledgement Handler
+        document.getElementById("mvpAcceptBtn").addEventListener("click", () => {
+            logGlobalAction("SECURITY", "Faculty operator read and accepted STEM Globe Technologies MVP Phase warning terms.");
+            document.getElementById("mvpShieldOverlay").style.display = "none";
+        });
+
+        // Catch All Document-level Click Event Interceptor
+        window.addEventListener("click", (e) => {
+            let targetDesc = e.target.tagName;
+            if(e.target.id) targetDesc += ` (ID: #${e.target.id})`;
+            else if(e.target.className) targetDesc += ` (Class: .${e.target.className.split(' ')[0]})`;
+            
+            const textContent = e.target.innerText ? ` "${e.target.innerText.substring(0,25).replace(/\n/g, '')}"` : "";
+            logGlobalAction("CLICK", `Faculty operator clicked element: <${targetDesc}>${textContent}`);
+        }, true);
+
+        // Track when date or year filters change
+        document.getElementById("attendanceDatePicker").addEventListener("change", (e) => {
+            logGlobalAction("CHANGE", `Attendance target selection date updated to: ${e.target.value}`);
+        });
+
+        document.getElementById("yearSelector").addEventListener("change", (e) => {
+            logGlobalAction("CHANGE", `Batch academic filter updated to cohort: ${e.target.value}`);
+        });
+
+        function streamAttendanceRoster() {
+            if (activeQueryUnsubscribe) activeQueryUnsubscribe();
+            const targetYear = document.getElementById("yearSelector").value;
+            const tbody = document.getElementById("attendanceRosterBody");
+            
+            document.getElementById("attendanceSearchBox").value = "";
+            const q = query(collection(db, "students"), where("year", "==", targetYear));
+
+            activeQueryUnsubscribe = onSnapshot(q, (snapshot) => {
+                tbody.innerHTML = "";
+                if(snapshot.empty) {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:48px;">No profiles found.</td></tr>`;
+                    return;
+                }
+                snapshot.forEach((studentDoc) => {
+                    const s = studentDoc.data();
+                    const tr = document.createElement('tr');
+                    tr.classList.add("roster-row");
+                    tr.setAttribute("data-search-token", `${s.name.toLowerCase()} ${s.rollNo.toLowerCase()}`);
+                    
+                    tr.innerHTML = `
+                        <td class="student-roll"><strong style="color:var(--brand-primary); font-weight:700;">${s.rollNo}</strong></td>
+                        <td class="student-name" style="font-weight:600;">${s.name}</td>
+                        <td style="color: var(--text-muted); font-weight:500;">${s.classSection}</td>
+                        <td style="text-align: center; display:flex; justify-content:center;">
+                            <div class="cta-group">
+                                <label>
+                                    <input type="radio" name="mark_${s.rollNo}" value="Active" checked class="hidden-radio">
+                                    <span class="cta-btn present-btn">Present</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="mark_${s.rollNo}" value="Absent" class="hidden-radio">
+                                    <span class="cta-btn absent-btn">Absent</span>
+                                </label>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+
+        document.getElementById("attendanceSearchBox").addEventListener("input", (e) => {
+            const val = e.target.value.toLowerCase().trim();
+            document.querySelectorAll(".roster-row").forEach(row => {
+                row.style.display = row.getAttribute("data-search-token").includes(val) ? "" : "none";
+            });
+            logGlobalAction("CHANGE", `Faculty filtered live roster dataset list query to look for: "${e.target.value}"`);
+        });
+
+        // Safe Custom-Path Multi-Date Storage Writing Transaction Look up
+        document.getElementById("attendanceSheetForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const rows = document.querySelectorAll(".roster-row");
+            const selectedDateString = document.getElementById("attendanceDatePicker").value;
+            
+            if(!selectedDateString) return alert("Please clarify session calendar date first.");
+            if(rows.length === 0) return alert("Roster verification impossible: Empty stream data.");
+
+            logGlobalAction("SUBMIT", `Faculty submitted bulk attendance update batch for date: ${selectedDateString} (${rows.length} total students computed)`);
+
+            try {
+                for (let row of rows) {
+                    const roll = row.querySelector(".student-roll").innerText;
+                    const val = row.querySelector(`input[name="mark_${roll}"]:checked`).value;
+                    
+                    await setDoc(doc(db, "students", roll, "attendance", selectedDateString), {
+                        date: selectedDateString,
+                        status: val
+                    });
+                }
+                alert(`🎯 Attendance successfully saved to database for date: ${selectedDateString}`);
+            } catch (err) { alert("Core Synchronizer Failure: " + err.message); }
+        });
+
+        document.getElementById("yearSelector").addEventListener("change", streamAttendanceRoster);
+        streamAttendanceRoster();
+    </script>
+</body>
+</html>
