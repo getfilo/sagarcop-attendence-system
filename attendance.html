@@ -18,109 +18,170 @@
             --border: #E5E7EB; 
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
         
-        /* --- NEW STEM GLOBE MVP PROMPT INTERACTION OVERLAY --- */
-        #mvpShieldOverlay { position: fixed; inset: 0; background: #030712; z-index: 100000; display: flex; align-items: center; justify-content: center; padding: 24px; }
-        .mvp-container { background: #ffffff; width: 100%; max-width: 480px; padding: 40px; border-radius: 24px; text-align: center; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border-top: 5px solid #DC2626; }
-        .mvp-logo { height: 64px; width: auto; object-fit: contain; margin-bottom: 24px; }
-        .mvp-title { font-size: 1.35rem; font-weight: 800; color: #111827; margin-bottom: 12px; letter-spacing: -0.5px; }
-        .mvp-badge { background: #FEF2F2; color: #DC2626; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; display: inline-block; margin-bottom: 20px; border: 1px solid #FEE2E2; }
-        .mvp-body { color: #4B5563; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; font-weight: 500; }
-        .mvp-contact { font-weight: 700; color: #2563EB; text-decoration: none; display: block; margin-top: 8px; }
-        .mvp-agree-btn { background: #111827; color: #ffffff; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .mvp-agree-btn:hover { background: #1F2937; transform: translateY(-1px); }
+        #authGate { position: fixed; inset: 0; background: rgba(10, 77, 52, 0.96); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(16px); padding: 20px; }
+        .gate-box { background: var(--surface); padding: 32px 24px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border-top: 4px solid var(--brand-gold); }
+        .gate-input { width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 12px; margin: 12px 0; text-align: center; font-size: 1.1rem; outline: none; background: #F3F4F6; font-weight: bold; }
+        .gate-input:focus { border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(10,77,52,0.1); }
+        .gate-btn { background: var(--brand-primary); color: #fff; border: none; padding: 16px; width: 100%; border-radius: 12px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 12px; }
 
-        header { height: 100px; background: var(--surface); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 1px solid var(--border); }
-        .logo-group { display: flex; align-items: center; gap: 20px; }
-        .logo-img { height: 60px; width: auto; object-fit: contain; }
-        .header-divider { height: 40px; width: 1px; background: var(--border); }
-        .header-title h1 { font-size: 1.3rem; font-weight: 700; color: var(--brand-dark); }
-        .header-title p { font-size: 0.85rem; color: var(--brand-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
-        .clock-ticker { font-size: 0.85rem; font-weight: 700; color: var(--brand-primary); background: #E6F4EA; padding: 10px 20px; border-radius: 99px; border: 1px solid rgba(10,77,52,0.08); }
+        #welcomeOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.98);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+            padding: 20px;
+        }
+        #welcomeOverlay.show { opacity: 1; visibility: visible; }
+        .welcome-card { text-align: center; animation: scaleUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .welcome-title { font-size: 2rem; font-weight: 800; color: var(--brand-dark); margin-top: 20px; letter-spacing: -0.5px; }
+        .welcome-subtitle { font-size: 1rem; color: var(--brand-primary); font-weight: 600; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
         
-        main { max-width: 1280px; width: 100%; margin: 40px auto; padding: 0 32px; flex: 1; display: flex; flex-direction: column; gap: 32px; }
-        .card { background: var(--surface); border-radius: 16px; padding: 32px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
-        
-        .selector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; background: #FFF; border-left: 5px solid var(--brand-gold); }
-        .selector-label { font-weight: 700; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .selector-box { padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); font-size: 1rem; width: 100%; background: #F9FAFB; margin-top: 8px; outline: none; color: var(--brand-dark); font-weight: 600; }
-        
-        .panel-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 16px; }
-        .search-wrap { position: relative; width: 360px; }
-        .search-wrap i { position: absolute; left: 16px; top: 15px; color: var(--text-muted); font-size: 1rem; }
-        .search-box { width: 100%; padding: 13px 13px 13px 48px; border: 1px solid var(--border); border-radius: 10px; outline: none; background: #F9FAFB; font-size: 0.95rem; }
-        
-        .table-wrap { width: 100%; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { padding: 16px 20px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; }
-        td { padding: 16px 20px; border-bottom: 1px solid var(--border); font-size: 0.95rem; vertical-align: middle; }
+        @keyframes scaleUp {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
 
-        .cta-group { display: flex; gap: 4px; background: #F3F4F6; padding: 4px; border-radius: 10px; border: 1px solid var(--border); width: fit-content; }
-        .cta-btn { padding: 10px 24px; border-radius: 8px; border: none; background: transparent; font-weight: 700; cursor: pointer; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
+        header { background: var(--surface); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; border-bottom: 1px solid var(--border); gap: 12px; text-align: center; }
+        .logo-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .logo-container { display: flex; justify-content: center; align-items: center; gap: 16px; width: 100%; }
+        .logo-img { height: 48px; width: auto; object-fit: contain; }
+        .header-title h1 { font-size: 1.2rem; font-weight: 700; color: var(--brand-dark); }
+        .header-title p { font-size: 0.8rem; color: var(--brand-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .clock-ticker { font-size: 0.85rem; font-weight: 700; color: var(--brand-primary); background: #E6F4EA; padding: 10px 20px; border-radius: 99px; width: fit-content; }
+        
+        main { width: 100%; max-width: 1280px; margin: 0 auto; padding: 20px 16px; flex: 1; display: flex; flex-direction: column; gap: 24px; }
+        .card { background: var(--surface); border-radius: 16px; padding: 24px 20px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        
+        .selector-grid { display: flex; flex-direction: column; gap: 20px; background: #FFF; border-left: 5px solid var(--brand-gold); }
+        .selector-label { font-weight: 700; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .selector-box { padding: 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 1rem; width: 100%; background: #F9FAFB; margin-top: 6px; outline: none; color: var(--brand-dark); font-weight: 600; -webkit-appearance: none; }
+        .selector-box:disabled { background: #E5E7EB; color: #4B5563; opacity: 1; }
+        
+        .panel-head { display: flex; flex-direction: column; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 16px; }
+        .search-wrap { position: relative; width: 100%; }
+        .search-wrap i { position: absolute; left: 16px; top: 16px; color: var(--text-muted); font-size: 1rem; }
+        .search-box { width: 100%; padding: 14px 14px 14px 44px; border: 1px solid var(--border); border-radius: 12px; outline: none; background: #F9FAFB; font-size: 0.95rem; }
+        
+        .table-wrap { width: 100%; overflow-x: auto; margin: 0 -20px; padding: 0 20px; width: calc(100% + 40px); -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 500px; }
+        th { padding: 14px 16px; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 16px 16px; border-bottom: 1px solid var(--border); font-size: 0.95rem; vertical-align: middle; white-space: nowrap; }
+
+        .cta-group { display: flex; gap: 4px; background: #F3F4F6; padding: 6px; border-radius: 12px; border: 1px solid var(--border); width: 100%; max-width: 220px; }
+        .cta-group label { flex: 1; }
+        .cta-btn { display: block; text-align: center; padding: 12px 0; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
         input[type="radio"]:checked + .present-btn { background: var(--brand-primary); color: #fff; }
         input[type="radio"]:checked + .absent-btn { background: #C5221F; color: #fff; }
         .hidden-radio { display: none; }
 
-        .action-flex { display: flex; justify-content: flex-end; gap: 16px; margin-top: 32px; border-top: 1px solid var(--border); padding-top: 24px; }
-        .btn-submit { background: var(--brand-primary); color: #fff; border: none; padding: 14px 32px; font-weight: 600; border-radius: 10px; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .action-flex { display: flex; margin-top: 24px; border-top: 1px solid var(--border); padding-top: 24px; }
+        .btn-submit { background: var(--brand-primary); color: #fff; border: none; padding: 16px; font-weight: 600; border-radius: 12px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
         
-        footer { background: var(--surface); text-align: center; padding: 28px; font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--border); font-weight: 500; }
+        footer { background: var(--surface); padding: 24px 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; }
+        .footer-copyright { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+        .footer-credit { font-size: 0.8rem; color: var(--brand-dark); font-weight: 600; background: #F3F4F6; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); width: 100%; max-width: 320px; }
+
+        @media (min-width: 768px) {
+            header { flex-direction: row; justify-content: space-between; padding: 0 48px; height: 100px; text-align: left; }
+            .logo-group { flex-direction: row; gap: 20px; }
+            .logo-container { width: auto; }
+            .welcome-title { font-size: 2.5rem; }
+            main { padding: 40px 32px; gap: 32px; }
+            .card { padding: 32px; }
+            .selector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+            .panel-head { flex-direction: row; justify-content: space-between; align-items: center; padding-bottom: 24px; }
+            .search-wrap { width: 360px; }
+            .btn-submit { width: auto; padding: 14px 32px; }
+            .action-flex { justify-content: flex-end; }
+            footer { flex-direction: row; justify-content: space-between; padding: 32px 48px; text-align: left; }
+            .footer-credit { width: auto; }
+            .table-wrap { margin: 0; padding: 0; width: 100%; overflow-x: visible; }
+            td { white-space: normal; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- MVP ENTRY POINT GUARD -->
-    <div id="mvpShieldOverlay">
-        <div class="mvp-container">
-            <img src="stemglobe.png" alt="STEM Globe Technologies Logo" class="mvp-logo">
-            <h2 class="mvp-title">System Caution Notice</h2>
-            <div class="mvp-badge">MVP Phase Active</div>
-            <p class="mvp-body">
-                This software management system is currently under an engineered **MVP Phase** owned and maintained exclusively by <strong>STEM Globe Technologies</strong>. For any technical disruptions, core errors, or assistance, please reach out to us at:
-                <a href="mailto:stemglobe.official@gmail.com" class="mvp-contact">stemglobe.official@gmail.com</a>
-            </p>
-            <button id="mvpAcceptBtn" class="mvp-agree-btn">I Agree & Proceed <i class="fa-solid fa-arrow-right"></i></button>
+    <div id="authGate">
+        <div class="gate-box">
+            <i class="fa-solid fa-chalkboard-user" style="font-size: 2.5rem; color: var(--brand-primary);"></i>
+            <h2 style="margin-top:16px; font-size: 1.3rem; color: var(--brand-dark); font-weight:700;">Faculty Terminal Login</h2>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top: 4px;">Enter credentials to synchronize roster</p>
+            <input type="text" id="facultyUserField" class="gate-input" placeholder="Username">
+            <input type="password" id="facultyPassField" class="gate-input" placeholder="••••••••">
+            <button id="verifyTerminalBtn" class="gate-btn">Verify Identity</button>
+        </div>
+    </div>
+
+    <div id="welcomeOverlay">
+        <div class="welcome-card">
+            <i class="fa-solid fa-circle-check" style="font-size: 3.5rem; color: var(--brand-primary);"></i>
+            <div class="welcome-title" id="welcomeFacultyName">Welcome, Faculty</div>
+            <div class="welcome-subtitle" id="welcomeFacultySubject">Terminal Channel Secured</div>
         </div>
     </div>
 
     <header>
         <div class="logo-group">
-            <img src="SCOP" alt="SCOP" class="logo-img">
-            <div class="header-divider"></div>
+            <div class="logo-container">
+                <img src="SCOP.webp" alt="SCOP" class="logo-img">
+                <div style="height: 32px; width: 1px; background: var(--border);" class="hidden-mobile"></div>
+                <img src="SBG.webp" alt="SBG" class="logo-img">
+            </div>
             <div class="header-title">
                 <h1>Sagar College of Pharmacy</h1>
                 <p>Faculty Attendance Management Terminal</p>
             </div>
         </div>
-        <div class="clock-ticker" id="liveClockDisplay">🕒 Connecting to Core Time Synchronization...</div>
-        <img src="SBG.webp" alt="SBG" class="logo-img">
+        <div class="clock-ticker" id="liveClockDisplay">🕒 Sync Pending...</div>
     </header>
 
     <main>
         <div class="card selector-grid">
             <div>
                 <span class="selector-label">Session Target Date</span>
-                <input type="date" id="attendanceDatePicker" class="selector-box" style="margin-top:8px; width:100%;">
+                <input type="date" id="attendanceDatePicker" class="selector-box">
             </div>
             <div>
-                <span class="selector-label">Target Academic Batch</span>
+                <span class="selector-label">Target Semester Roster</span>
                 <select id="yearSelector" class="selector-box">
-                    <option value="1st Year">1st Year</option>
-                    <option value="2nd Year" selected>2nd Year</option>
-                    <option value="3rd Year">3rd Year</option>
-                    <option value="4th Year">4th Year</option>
-                    <option value="Diploma">Diploma</option>
+                    <option value="1st Sem">1st Semester</option>
+                    <option value="2nd Sem">2nd Semester</option>
+                    <option value="3rd Sem" selected>3rd Semester</option>
+                    <option value="4th Sem">4th Semester</option>
+                    <option value="5th Sem">5th Semester</option>
+                    <option value="6th Sem">6th Semester</option>
+                    <option value="7th Sem">7th Semester</option>
+                    <option value="8th Sem">8th Semester</option>
+                </select>
+            </div>
+            <div>
+                <span class="selector-label">Subject Lecture Slot</span>
+                <select id="subjectSelector" class="selector-box">
+                    <option value="POC III">POC III (Ms. Gayatri Patil)</option>
+                    <option value="Med Chem">Med Chem (Ms. Trupti Talwar)</option>
+                    <option value="PP II">PP II (Mr. Akshay S Killedar)</option>
+                    <option value="P Col I">P Col I (Mrs. Chaitanya B)</option>
+                    <option value="P Cog I">P Cog I (Dr. Kiran Kumar Hullatti)</option>
                 </select>
             </div>
         </div>
 
         <div class="card">
             <div class="panel-head">
-                <h3 style="font-size:1.2rem; font-weight:700; color:var(--brand-dark);"><i class="fa-solid fa-clipboard-user" style="color:var(--brand-primary); margin-right:8px;"></i> Batch Roster Verification</h3>
+                <h3 style="font-size:1.1rem; font-weight:700; color:var(--brand-dark);"><i class="fa-solid fa-clipboard-user" style="color:var(--brand-primary); margin-right:6px;"></i> Roster Verification</h3>
                 <div class="search-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="attendanceSearchBox" class="search-box" placeholder="Filter roster by candidate details...">
+                    <input type="text" id="attendanceSearchBox" class="search-box" placeholder="Filter roster details...">
                 </div>
             </div>
 
@@ -131,8 +192,7 @@
                             <tr>
                                 <th>Roll Number</th>
                                 <th>Student Name</th>
-                                <th>Allocated Section</th>
-                                <th style="width: 240px; text-align: center;">Roll Call Registry Status</th>
+                                <th style="width: 220px; text-align: center;">Registry Status</th>
                             </tr>
                         </thead>
                         <tbody id="attendanceRosterBody"></tbody>
@@ -140,19 +200,26 @@
                 </div>
 
                 <div class="action-flex">
-                    <button type="submit" id="saveAttendanceBtn" class="btn-submit"><i class="fa-solid fa-cloud-arrow-up"></i> Save & Secure to Inbuilt Ledger</button>
+                    <button type="submit" id="saveAttendanceBtn" class="btn-submit"><i class="fa-solid fa-cloud-arrow-up"></i> Save to Ledger</button>
                 </div>
             </form>
         </div>
     </main>
 
-    <footer>All Rights Reserved | Sagar College of Pharmacy | 2026 Developed by PixelWeb</footer>
+    <footer>
+        <div class="footer-copyright">
+            &copy; 2026 Sagar College of Pharmacy. All Rights Reserved.
+        </div>
+        <div class="footer-credit">
+            Designed & Developed by STEM Globe matrix
+        </div>
+    </footer>
 
     <script>
         document.getElementById('attendanceDatePicker').value = new Date().toISOString().split('T')[0];
         function runSystemTime() {
             const now = new Date();
-            document.getElementById('liveClockDisplay').innerText = `🕒 Terminal Clock Sync: ${now.toLocaleTimeString()}`;
+            document.getElementById('liveClockDisplay').innerText = `🕒 Clock Sync: ${now.toLocaleTimeString()}`;
         }
         setInterval(runSystemTime, 1000);
         runSystemTime();
@@ -176,42 +243,40 @@
         const db = getFirestore(app);
         let activeQueryUnsubscribe = null;
 
-        // Core Global Sensing System Pipe
-        async function logGlobalAction(type, msg) {
-            try {
-                const lid = "log_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
-                await setDoc(doc(db, "system_logs", lid), {
-                    sourcePanel: "Faculty Terminal",
-                    eventType: type.toUpperCase(),
-                    message: msg,
-                    timestamp: serverTimestamp()
-                });
-            } catch(ex) { console.error(ex); }
-        }
+        const facultyRosterCatalog = {
+            "sgt01": { code: "sgt01", label: "POC III", name: "Ms. Gayatri Patil" },
+            "sgt02": { code: "sgt02", label: "Med Chem", name: "Ms. Trupti Talwar" },
+            "sgt03": { code: "sgt03", label: "PP II", name: "Mr. Akshay S Killedar" },
+            "sgt04": { code: "sgt04", label: "P Col I", name: "Mrs. Chaitanya B" },
+            "sgt05": { code: "sgt05", label: "P Cog I", name: "Dr. Kiran Kumar Hullatti" }
+        };
 
-        // MVP Portal Gateway Acknowledgement Handler
-        document.getElementById("mvpAcceptBtn").addEventListener("click", () => {
-            logGlobalAction("SECURITY", "Faculty operator read and accepted STEM Globe Technologies MVP Phase warning terms.");
-            document.getElementById("mvpShieldOverlay").style.display = "none";
-        });
+        document.getElementById("verifyTerminalBtn").addEventListener("click", () => {
+            const userVal = document.getElementById("facultyUserField").value.trim();
+            const passVal = document.getElementById("facultyPassField").value.trim();
 
-        // Catch All Document-level Click Event Interceptor
-        window.addEventListener("click", (e) => {
-            let targetDesc = e.target.tagName;
-            if(e.target.id) targetDesc += ` (ID: #${e.target.id})`;
-            else if(e.target.className) targetDesc += ` (Class: .${e.target.className.split(' ')[0]})`;
-            
-            const textContent = e.target.innerText ? ` "${e.target.innerText.substring(0,25).replace(/\n/g, '')}"` : "";
-            logGlobalAction("CLICK", `Faculty operator clicked element: <${targetDesc}>${textContent}`);
-        }, true);
+            if(facultyRosterCatalog[userVal] && facultyRosterCatalog[userVal].code === passVal) {
+                const facultyData = facultyRosterCatalog[userVal];
+                const targetDropdown = document.getElementById("subjectSelector");
+                
+                targetDropdown.value = facultyData.label;
+                targetDropdown.disabled = true;
+                
+                document.getElementById("authGate").style.display = "none";
+                
+                document.getElementById("welcomeFacultyName").innerText = `Welcome, ${facultyData.name}`;
+                document.getElementById("welcomeFacultySubject").innerText = `Assigned Slot: ${facultyData.label}`;
+                
+                const welcomeOverlay = document.getElementById("welcomeOverlay");
+                welcomeOverlay.classList.add("show");
+                
+                setTimeout(() => {
+                    welcomeOverlay.classList.remove("show");
+                }, 5000);
 
-        // Track when date or year filters change
-        document.getElementById("attendanceDatePicker").addEventListener("change", (e) => {
-            logGlobalAction("CHANGE", `Attendance target selection date updated to: ${e.target.value}`);
-        });
-
-        document.getElementById("yearSelector").addEventListener("change", (e) => {
-            logGlobalAction("CHANGE", `Batch academic filter updated to cohort: ${e.target.value}`);
+            } else {
+                alert("Invalid credentials. Please try again.");
+            }
         });
 
         function streamAttendanceRoster() {
@@ -225,7 +290,7 @@
             activeQueryUnsubscribe = onSnapshot(q, (snapshot) => {
                 tbody.innerHTML = "";
                 if(snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:48px;">No profiles found.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:32px;">No profiles found.</td></tr>`;
                     return;
                 }
                 snapshot.forEach((studentDoc) => {
@@ -233,11 +298,10 @@
                     const tr = document.createElement('tr');
                     tr.classList.add("roster-row");
                     tr.setAttribute("data-search-token", `${s.name.toLowerCase()} ${s.rollNo.toLowerCase()}`);
-                    
+                                        
                     tr.innerHTML = `
                         <td class="student-roll"><strong style="color:var(--brand-primary); font-weight:700;">${s.rollNo}</strong></td>
                         <td class="student-name" style="font-weight:600;">${s.name}</td>
-                        <td style="color: var(--text-muted); font-weight:500;">${s.classSection}</td>
                         <td style="text-align: center; display:flex; justify-content:center;">
                             <div class="cta-group">
                                 <label>
@@ -261,32 +325,32 @@
             document.querySelectorAll(".roster-row").forEach(row => {
                 row.style.display = row.getAttribute("data-search-token").includes(val) ? "" : "none";
             });
-            logGlobalAction("CHANGE", `Faculty filtered live roster dataset list query to look for: "${e.target.value}"`);
         });
 
-        // Safe Custom-Path Multi-Date Storage Writing Transaction Look up
         document.getElementById("attendanceSheetForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             const rows = document.querySelectorAll(".roster-row");
             const selectedDateString = document.getElementById("attendanceDatePicker").value;
-            
-            if(!selectedDateString) return alert("Please clarify session calendar date first.");
-            if(rows.length === 0) return alert("Roster verification impossible: Empty stream data.");
+            const selectedSubject = document.getElementById("subjectSelector").value;
 
-            logGlobalAction("SUBMIT", `Faculty submitted bulk attendance update batch for date: ${selectedDateString} (${rows.length} total students computed)`);
+            if(!selectedDateString) return alert("Please select a session calendar date.");
+            if(rows.length === 0) return alert("Roster verification impossible: Empty data.");
 
             try {
                 for (let row of rows) {
                     const roll = row.querySelector(".student-roll").innerText;
                     const val = row.querySelector(`input[name="mark_${roll}"]:checked`).value;
+                    const dynamicCompositeKey = `${selectedDateString}_${selectedSubject}`;
                     
-                    await setDoc(doc(db, "students", roll, "attendance", selectedDateString), {
+                    await setDoc(doc(db, "students", roll, "attendance", dynamicCompositeKey), {
                         date: selectedDateString,
-                        status: val
+                        subject: selectedSubject,
+                        status: val,
+                        timestamp: serverTimestamp()
                     });
                 }
-                alert(`🎯 Attendance successfully saved to database for date: ${selectedDateString}`);
-            } catch (err) { alert("Core Synchronizer Failure: " + err.message); }
+                alert(`🎯 Attendance successfully saved for ${selectedSubject}`);
+            } catch (err) { alert("Synchronizer Failure: " + err.message); }
         });
 
         document.getElementById("yearSelector").addEventListener("change", streamAttendanceRoster);
