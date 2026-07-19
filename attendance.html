@@ -71,20 +71,31 @@
         .search-wrap i { position: absolute; left: 16px; top: 16px; color: var(--text-muted); font-size: 1rem; }
         .search-box { width: 100%; padding: 14px 14px 14px 44px; border: 1px solid var(--border); border-radius: 12px; outline: none; background: #F9FAFB; font-size: 0.95rem; }
         
-        .table-wrap { width: 100%; overflow-x: auto; margin: 0 -20px; padding: 0 20px; width: calc(100% + 40px); -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 500px; }
-        th { padding: 14px 16px; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; }
-        td { padding: 16px 16px; border-bottom: 1px solid var(--border); font-size: 0.95rem; vertical-align: middle; white-space: nowrap; }
-
-        .cta-group { display: flex; gap: 4px; background: #F3F4F6; padding: 6px; border-radius: 12px; border: 1px solid var(--border); width: 100%; max-width: 220px; }
+        .roster-container { display: flex; flex-direction: column; gap: 12px; }
+        .roster-card { 
+            background: #FFFFFF; 
+            border: 1px solid var(--border); 
+            border-radius: 14px; 
+            padding: 16px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 14px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+        }
+        .roster-info-block { display: flex; flex-direction: column; gap: 2px; }
+        .student-title-roll { font-size: 0.85rem; font-weight: 700; color: var(--brand-primary); letter-spacing: 0.5px; }
+        .student-title-name { font-size: 1.05rem; font-weight: 600; color: var(--brand-dark); }
+        
+        .cta-group { display: flex; gap: 8px; background: #F3F4F6; padding: 6px; border-radius: 12px; border: 1px solid var(--border); width: 100%; }
         .cta-group label { flex: 1; }
-        .cta-btn { display: block; text-align: center; padding: 12px 0; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
-        input[type="radio"]:checked + .present-btn { background: var(--brand-primary); color: #fff; }
-        input[type="radio"]:checked + .absent-btn { background: #C5221F; color: #fff; }
+        .cta-btn { display: block; text-align: center; padding: 14px 0; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; }
+        input[type="radio"]:checked + .present-btn { background: var(--brand-primary); color: #fff; box-shadow: 0 4px 10px rgba(10, 77, 52, 0.2); }
+        input[type="radio"]:checked + .absent-btn { background: #C5221F; color: #fff; box-shadow: 0 4px 10px rgba(197, 34, 31, 0.2); }
         .hidden-radio { display: none; }
 
+        .desktop-header-view { display: none; }
         .action-flex { display: flex; margin-top: 24px; border-top: 1px solid var(--border); padding-top: 24px; }
-        .btn-submit { background: var(--brand-primary); color: #fff; border: none; padding: 16px; font-weight: 600; border-radius: 12px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+        .btn-submit { background: var(--brand-primary); color: #fff; border: none; padding: 18px; font-weight: 600; border-radius: 12px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
         
         footer { background: var(--surface); padding: 24px 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; }
         .footer-copyright { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
@@ -104,8 +115,36 @@
             .action-flex { justify-content: flex-end; }
             footer { flex-direction: row; justify-content: space-between; padding: 32px 48px; text-align: left; }
             .footer-credit { width: auto; }
-            .table-wrap { margin: 0; padding: 0; width: 100%; overflow-x: visible; }
-            td { white-space: normal; }
+            
+            .desktop-header-view { 
+                display: flex; 
+                background: var(--bg); 
+                padding: 12px 20px; 
+                border-radius: 8px; 
+                font-weight: 700; 
+                font-size: 0.75rem; 
+                color: var(--text-muted); 
+                text-transform: uppercase; 
+                letter-spacing: 0.5px;
+                margin-bottom: 8px;
+            }
+            .dh-roll { width: 25%; }
+            .dh-name { width: 45%; }
+            .dh-status { width: 30%; text-align: center; }
+            
+            .roster-card { 
+                flex-direction: row; 
+                align-items: center; 
+                padding: 12px 20px; 
+                border-radius: 0; 
+                border: none; 
+                border-bottom: 1px solid var(--border); 
+            }
+            .roster-info-block { flex-direction: row; width: 70%; align-items: center; }
+            .student-title-roll { width: 35%; font-size: 0.95rem; }
+            .student-title-name { width: 65%; font-size: 0.95rem; }
+            .cta-group { width: 30%; max-width: 220px; padding: 4px; }
+            .cta-btn { padding: 8px 0; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -116,8 +155,8 @@
             <i class="fa-solid fa-chalkboard-user" style="font-size: 2.5rem; color: var(--brand-primary);"></i>
             <h2 style="margin-top:16px; font-size: 1.3rem; color: var(--brand-dark); font-weight:700;">Faculty Terminal Login</h2>
             <p style="color:var(--text-muted); font-size:0.85rem; margin-top: 4px;">Enter credentials to synchronize roster</p>
-            <input type="text" id="facultyUserField" class="gate-input" placeholder="Username">
-            <input type="password" id="facultyPassField" class="gate-input" placeholder="••••••••">
+            <input type="text" id="facultyUserField" class="gate-input" style="letter-spacing: normal;" placeholder="Username (e.g., SCOP01)">
+            <input type="password" id="facultyPassField" class="gate-input" placeholder="Passcode (e.g., SCOP-01)">
             <button id="verifyTerminalBtn" class="gate-btn">Verify Identity</button>
         </div>
     </div>
@@ -167,12 +206,7 @@
             <div>
                 <span class="selector-label">Subject Lecture Slot</span>
                 <select id="subjectSelector" class="selector-box">
-                    <option value="POC III">POC III (Ms. Gayatri Patil)</option>
-                    <option value="Med Chem">Med Chem (Ms. Trupti Talwar)</option>
-                    <option value="PP II">PP II (Mr. Akshay S Killedar)</option>
-                    <option value="P Col I">P Col I (Mrs. Chaitanya B)</option>
-                    <option value="P Cog I">P Cog I (Dr. Kiran Kumar Hullatti)</option>
-                </select>
+                     </select>
             </div>
         </div>
 
@@ -186,18 +220,14 @@
             </div>
 
             <form id="attendanceSheetForm">
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Roll Number</th>
-                                <th>Student Name</th>
-                                <th style="width: 220px; text-align: center;">Registry Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="attendanceRosterBody"></tbody>
-                    </table>
+                <div class="desktop-header-view">
+                    <div class="dh-roll">Roll Number</div>
+                    <div class="dh-name">Student Name</div>
+                    <div class="dh-status">Registry Status</div>
                 </div>
+
+                <div id="attendanceRosterBody" class="roster-container">
+                     </div>
 
                 <div class="action-flex">
                     <button type="submit" id="saveAttendanceBtn" class="btn-submit"><i class="fa-solid fa-cloud-arrow-up"></i> Save to Ledger</button>
@@ -227,7 +257,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, query, where, onSnapshot, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, query, where, onSnapshot, doc, setDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBljkKXqZtGH-tY5ucY6XyUFJxy428BMgU",
@@ -242,104 +272,129 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         let activeQueryUnsubscribe = null;
+        let localSubjectsRegistry = {};
 
-        const facultyRosterCatalog = {
-            "sgt01": { code: "sgt01", label: "POC III", name: "Ms. Gayatri Patil" },
-            "sgt02": { code: "sgt02", label: "Med Chem", name: "Ms. Trupti Talwar" },
-            "sgt03": { code: "sgt03", label: "PP II", name: "Mr. Akshay S Killedar" },
-            "sgt04": { code: "sgt04", label: "P Col I", name: "Mrs. Chaitanya B" },
-            "sgt05": { code: "sgt05", label: "P Cog I", name: "Dr. Kiran Kumar Hullatti" }
-        };
+        const baselineSubjects = [
+            { id: "scop01", code: "scop01", label: "POC III", name: "Ms. Gayatri Patil", semester: "3rd Sem" },
+            { id: "scop02", code: "scop02", label: "Med Chem", name: "Ms. Trupti Talwar", semester: "3rd Sem" },
+            { id: "scop03", code: "scop03", label: "PP II", name: "Mr. Akshay S Killedar", semester: "3rd Sem" },
+            { id: "scop04", code: "scop04", label: "P Col I", name: "Mrs. Chaitanya B", semester: "3rd Sem" },
+            { id: "scop05", code: "scop05", label: "P Cog I", name: "Dr. Kiran Kumar Hullatti", semester: "3rd Sem" }
+        ];
+
+        onSnapshot(collection(db, "subjects"), (snapshot) => {
+            const dropdown = document.getElementById("subjectSelector");
+            dropdown.innerHTML = "";
+            localSubjectsRegistry = {};
+
+            if(snapshot.empty) {
+                baselineSubjects.forEach(b => {
+                    localSubjectsRegistry[b.code] = b;
+                    dropdown.add(new Option(`${b.label} (${b.name})`, b.label));
+                });
+            } else {
+                snapshot.forEach(doc => {
+                    let s = doc.data();
+                    localSubjectsRegistry[s.code] = s;
+                    dropdown.add(new Option(`${s.label} (${s.name})`, s.label));
+                });
+            }
+        });
 
         document.getElementById("verifyTerminalBtn").addEventListener("click", () => {
-            const userVal = document.getElementById("facultyUserField").value.trim();
-            const passVal = document.getElementById("facultyPassField").value.trim();
+            const userVal = document.getElementById("facultyUserField").value.trim().toLowerCase();
+            const passVal = document.getElementById("facultyPassField").value.trim().toLowerCase();
 
-            if(facultyRosterCatalog[userVal] && facultyRosterCatalog[userVal].code === passVal) {
-                const facultyData = facultyRosterCatalog[userVal];
+            // Auto-hyphen validation logic mapping "scop01" username with "scop-01" passcode variant rules
+            const sanitizedPassphrase = passVal.replace('-', '');
+
+            if(localSubjectsRegistry[userVal] && userVal === sanitizedPassphrase) {
+                const facultyData = localSubjectsRegistry[userVal];
                 const targetDropdown = document.getElementById("subjectSelector");
+                const targetSemesterDropdown = document.getElementById("yearSelector");
                 
                 targetDropdown.value = facultyData.label;
                 targetDropdown.disabled = true;
+
+                if(facultyData.semester) {
+                    targetSemesterDropdown.value = facultyData.semester;
+                }
                 
                 document.getElementById("authGate").style.display = "none";
-                
                 document.getElementById("welcomeFacultyName").innerText = `Welcome, ${facultyData.name}`;
                 document.getElementById("welcomeFacultySubject").innerText = `Assigned Slot: ${facultyData.label}`;
                 
                 const welcomeOverlay = document.getElementById("welcomeOverlay");
                 welcomeOverlay.classList.add("show");
-                
-                setTimeout(() => {
-                    welcomeOverlay.classList.remove("show");
-                }, 5000);
+                setTimeout(() => { welcomeOverlay.classList.remove("show"); }, 4000);
 
+                streamAttendanceRoster();
             } else {
-                alert("Invalid credentials. Please try again.");
+                alert("Invalid dynamic terminal credentials.");
             }
         });
 
         function streamAttendanceRoster() {
             if (activeQueryUnsubscribe) activeQueryUnsubscribe();
             const targetYear = document.getElementById("yearSelector").value;
-            const tbody = document.getElementById("attendanceRosterBody");
+            const container = document.getElementById("attendanceRosterBody");
             
             document.getElementById("attendanceSearchBox").value = "";
             const q = query(collection(db, "students"), where("year", "==", targetYear));
 
             activeQueryUnsubscribe = onSnapshot(q, (snapshot) => {
-                tbody.innerHTML = "";
+                container.innerHTML = "";
                 if(snapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:32px;">No profiles found.</td></tr>`;
+                    container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:32px; width:100%;">No profiles discovered matching filters.</div>`;
                     return;
                 }
                 snapshot.forEach((studentDoc) => {
                     const s = studentDoc.data();
-                    const tr = document.createElement('tr');
-                    tr.classList.add("roster-row");
-                    tr.setAttribute("data-search-token", `${s.name.toLowerCase()} ${s.rollNo.toLowerCase()}`);
+                    const card = document.createElement('div');
+                    card.classList.add("roster-card");
+                    card.setAttribute("data-search-token", `${s.name.toLowerCase()} ${s.rollNo.toLowerCase()}`);
                                         
-                    tr.innerHTML = `
-                        <td class="student-roll"><strong style="color:var(--brand-primary); font-weight:700;">${s.rollNo}</strong></td>
-                        <td class="student-name" style="font-weight:600;">${s.name}</td>
-                        <td style="text-align: center; display:flex; justify-content:center;">
-                            <div class="cta-group">
-                                <label>
-                                    <input type="radio" name="mark_${s.rollNo}" value="Active" checked class="hidden-radio">
-                                    <span class="cta-btn present-btn">Present</span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="mark_${s.rollNo}" value="Absent" class="hidden-radio">
-                                    <span class="cta-btn absent-btn">Absent</span>
-                                </label>
-                            </div>
-                        </td>
+                    card.innerHTML = `
+                        <div class="roster-info-block">
+                            <span class="student-title-roll">${s.rollNo}</span>
+                            <span class="student-title-name">${s.name}</span>
+                        </div>
+                        <div class="cta-group">
+                            <label>
+                                <input type="radio" name="mark_${s.rollNo}" value="Active" checked class="hidden-radio">
+                                <span class="cta-btn present-btn">Present</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="mark_${s.rollNo}" value="Absent" class="hidden-radio">
+                                <span class="cta-btn absent-btn">Absent</span>
+                            </label>
+                        </div>
                     `;
-                    tbody.appendChild(tr);
+                    container.appendChild(card);
                 });
             });
         }
 
         document.getElementById("attendanceSearchBox").addEventListener("input", (e) => {
             const val = e.target.value.toLowerCase().trim();
-            document.querySelectorAll(".roster-row").forEach(row => {
-                row.style.display = row.getAttribute("data-search-token").includes(val) ? "" : "none";
+            document.querySelectorAll(".roster-card").forEach(card => {
+                card.style.display = card.getAttribute("data-search-token").includes(val) ? "" : "none";
             });
         });
 
         document.getElementById("attendanceSheetForm").addEventListener("submit", async (e) => {
             e.preventDefault();
-            const rows = document.querySelectorAll(".roster-row");
+            const cards = document.querySelectorAll(".roster-card");
             const selectedDateString = document.getElementById("attendanceDatePicker").value;
             const selectedSubject = document.getElementById("subjectSelector").value;
 
             if(!selectedDateString) return alert("Please select a session calendar date.");
-            if(rows.length === 0) return alert("Roster verification impossible: Empty data.");
+            if(cards.length === 0) return alert("Roster verification impossible: Empty data.");
 
             try {
-                for (let row of rows) {
-                    const roll = row.querySelector(".student-roll").innerText;
-                    const val = row.querySelector(`input[name="mark_${roll}"]:checked`).value;
+                for (let card of cards) {
+                    const roll = card.querySelector(".student-title-roll").innerText;
+                    const val = card.querySelector(`input[name="mark_${roll}"]:checked`).value;
                     const dynamicCompositeKey = `${selectedDateString}_${selectedSubject}`;
                     
                     await setDoc(doc(db, "students", roll, "attendance", dynamicCompositeKey), {
