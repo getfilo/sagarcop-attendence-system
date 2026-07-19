@@ -18,86 +18,85 @@
             --border: #E5E7EB; 
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
         
-        /* --- NEW STEM GLOBE MVP PROMPT INTERACTION OVERLAY --- */
-        #mvpShieldOverlay { position: fixed; inset: 0; background: #030712; z-index: 100000; display: flex; align-items: center; justify-content: center; padding: 24px; }
-        .mvp-container { background: #ffffff; width: 100%; max-width: 480px; padding: 40px; border-radius: 24px; text-align: center; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border-top: 5px solid #DC2626; }
-        .mvp-logo { height: 64px; width: auto; object-fit: contain; margin-bottom: 24px; }
-        .mvp-title { font-size: 1.35rem; font-weight: 800; color: #111827; margin-bottom: 12px; letter-spacing: -0.5px; }
-        .mvp-badge { background: #FEF2F2; color: #DC2626; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; display: inline-block; margin-bottom: 20px; border: 1px solid #FEE2E2; }
-        .mvp-body { color: #4B5563; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; font-weight: 500; }
-        .mvp-contact { font-weight: 700; color: #2563EB; text-decoration: none; display: block; margin-top: 8px; }
-        .mvp-agree-btn { background: #111827; color: #ffffff; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .mvp-agree-btn:hover { background: #1F2937; transform: translateY(-1px); }
-
-        #authGate { position: fixed; inset: 0; background: rgba(10, 77, 52, 0.96); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(16px); }
-        .gate-box { background: var(--surface); padding: 48px; border-radius: 20px; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); border-top: 4px solid var(--brand-gold); }
-        .gate-input { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 10px; margin: 24px 0; text-align: center; font-size: 1.2rem; letter-spacing: 6px; outline: none; background: #F3F4F6; font-weight: bold; transition: all 0.2s; }
+        #authGate { position: fixed; inset: 0; background: rgba(10, 77, 52, 0.96); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(16px); padding: 20px; }
+        .gate-box { background: var(--surface); padding: 32px 24px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border-top: 4px solid var(--brand-gold); }
+        .gate-input { width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 12px; margin: 20px 0; text-align: center; font-size: 1.2rem; letter-spacing: 6px; outline: none; background: #F3F4F6; font-weight: bold; }
         .gate-input:focus { border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(10,77,52,0.1); }
-        .gate-btn { background: var(--brand-primary); color: #fff; border: none; padding: 14px; width: 100%; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+        .gate-btn { background: var(--brand-primary); color: #fff; border: none; padding: 16px; width: 100%; border-radius: 12px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        header { height: 100px; background: var(--surface); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 1px solid var(--border); }
-        .logo-group { display: flex; align-items: center; gap: 20px; }
-        .logo-img { height: 60px; width: auto; object-fit: contain; }
-        .header-divider { height: 40px; width: 1px; background: var(--border); }
-        .header-title h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; color: var(--brand-dark); }
-        .header-title p { font-size: 0.85rem; color: var(--brand-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+        header { background: var(--surface); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; border-bottom: 1px solid var(--border); gap: 12px; text-align: center; }
+        .logo-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .logo-container { display: flex; justify-content: center; align-items: center; gap: 16px; width: 100%; }
+        .logo-img { height: 48px; width: auto; object-fit: contain; }
+        .header-title h1 { font-size: 1.2rem; font-weight: 700; color: var(--brand-dark); }
+        .header-title p { font-size: 0.8rem; color: var(--brand-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        main { max-width: 1280px; width: 100%; margin: 40px auto; padding: 0 32px; flex: 1; display: flex; flex-direction: column; gap: 32px; }
-        .card { background: var(--surface); border-radius: 16px; padding: 32px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
-        .card-title { font-size: 1.2rem; font-weight: 700; color: var(--brand-dark); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+        main { width: 100%; max-width: 1280px; margin: 0 auto; padding: 20px 16px; flex: 1; display: flex; flex-direction: column; gap: 24px; }
+        .card { background: var(--surface); border-radius: 16px; padding: 24px 20px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        .card-title { font-size: 1.15rem; font-weight: 700; color: var(--brand-dark); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
         
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; align-items: flex-end; }
-        .form-group { display: flex; flex-direction: column; gap: 8px; }
-        .form-group label { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input, .form-group select { padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; outline: none; background: #F9FAFB; font-size: 0.95rem; color: var(--text-main); transition: all 0.2s; font-weight: 500; }
+        .form-grid { display: flex; flex-direction: column; gap: 18px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group select { padding: 16px; border: 1px solid var(--border); border-radius: 12px; outline: none; background: #F9FAFB; font-size: 1rem; color: var(--text-main); font-weight: 500; width: 100%; -webkit-appearance: none; }
         .form-group input:focus, .form-group select:focus { border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(10,77,52,0.08); }
-        .submit-btn { background: var(--brand-primary); color: white; border: none; padding: 14px 28px; font-weight: 600; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95rem; }
         
-        .directory-controls { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; background: #F9FAFB; padding: 16px; border-radius: 12px; border: 1px solid var(--border); }
-        .search-wrap { position: relative; flex: 1; min-width: 280px; }
-        .search-wrap i { position: absolute; left: 16px; top: 15px; color: var(--text-muted); font-size: 1rem; }
-        .search-box { width: 100%; padding: 13px 13px 13px 48px; border: 1px solid var(--border); border-radius: 10px; outline: none; background: #fff; font-size: 0.95rem; }
-        .filter-select { width: 240px; padding: 13px 16px; border: 1px solid var(--border); border-radius: 10px; outline: none; background: #fff; font-size: 0.95rem; color: var(--text-main); font-weight: 500; }
+        .submit-btn { background: var(--brand-primary); color: white; border: none; padding: 16px; font-weight: 600; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; margin-top: 8px; width: 100%; }
+        
+        .directory-controls { display: flex; flex-direction: column; gap: 16px; background: #F9FAFB; padding: 16px; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .search-wrap { position: relative; width: 100%; }
+        .search-wrap i { position: absolute; left: 16px; top: 16px; color: var(--text-muted); font-size: 1rem; }
+        .search-box { width: 100%; padding: 14px 14px 14px 44px; border: 1px solid var(--border); border-radius: 12px; outline: none; background: #fff; font-size: 0.95rem; }
+        .filter-select { width: 100%; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; outline: none; background: #fff; font-size: 0.95rem; color: var(--text-main); font-weight: 500; }
 
-        .table-wrap { width: 100%; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { padding: 16px 20px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; background: #FFF; }
-        td { padding: 18px 20px; border-bottom: 1px solid var(--border); font-size: 0.95rem; vertical-align: middle; color: #374151; }
+        .table-wrap { width: 100%; overflow-x: auto; margin: 0 -20px; padding: 0 20px; width: calc(100% + 40px); -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 500px; }
+        th { padding: 14px 16px; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; background: #FFF; }
+        td { padding: 16px 16px; border-bottom: 1px solid var(--border); font-size: 0.95rem; vertical-align: middle; color: #374151; white-space: nowrap; }
         
-        .badge { padding: 6px 14px; border-radius: 99px; font-size: 0.8rem; font-weight: 600; display: inline-flex; }
+        .badge { padding: 6px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; display: inline-flex; }
         .badge.active { background: #E6F4EA; color: #137333; }
         .badge.absent { background: #FCE8E6; color: #C5221F; }
         .badge.nodata { background: #F3F4F6; color: #6B7280; }
         
-        .trash-btn { background: none; border: none; color: #9CA3AF; cursor: pointer; font-size: 1.05rem; padding: 8px; border-radius: 8px; }
+        .stat-pill { font-size: 0.8rem; font-weight: 700; padding: 6px 10px; border-radius: 8px; display: inline-block; margin-right: 4px; }
+        .stat-pill.present { background: #E6F4EA; color: #137333; }
+        .stat-pill.absent { background: #FCE8E6; color: #C5221F; }
+
+        .trash-btn { background: none; border: none; color: #9CA3AF; cursor: pointer; font-size: 1.1rem; padding: 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto; min-width: 44px; min-height: 44px; }
         .trash-btn:hover { color: #DC2626; background: #FEF2F2; }
         
-        footer { background: var(--surface); text-align: center; padding: 28px; font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--border); font-weight: 500; }
+        footer { background: var(--surface); padding: 24px 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; }
+        .footer-copyright { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+        .footer-credit { font-size: 0.8rem; color: var(--brand-dark); font-weight: 600; background: #F3F4F6; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); width: 100%; max-width: 320px; }
+
+        @media (min-width: 768px) {
+            header { flex-direction: row; justify-content: space-between; padding: 0 48px; height: 100px; text-align: left; }
+            .logo-group { flex-direction: row; gap: 20px; }
+            .logo-container { width: auto; }
+            main { padding: 40px 32px; gap: 32px; }
+            .card { padding: 32px; }
+            .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; align-items: flex-end; }
+            .submit-btn { width: auto; margin-top: 0; }
+            .directory-controls { flex-direction: row; align-items: flex-end; flex-wrap: wrap; }
+            .search-wrap { flex: 1; min-width: 280px; }
+            .filter-select { width: 200px; }
+            footer { flex-direction: row; justify-content: space-between; padding: 32px 48px; text-align: left; }
+            .footer-credit { width: auto; }
+            .table-wrap { margin: 0; padding: 0; width: 100%; overflow-x: visible; }
+            td { white-space: normal; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- MVP ENTRY POINT GUARD -->
-    <div id="mvpShieldOverlay">
-        <div class="mvp-container">
-            <img src="stemglobe.png" alt="STEM Globe Technologies Logo" class="mvp-logo">
-            <h2 class="mvp-title">System Caution Notice</h2>
-            <div class="mvp-badge">MVP Phase Active</div>
-            <p class="mvp-body">
-                This software management system is currently under an engineered **MVP Phase** owned and maintained exclusively by <strong>STEM Globe Technologies</strong>. For any technical disruptions, core errors, or assistance, please reach out to us at:
-                <a href="mailto:stemglobe.official@gmail.com" class="mvp-contact">stemglobe.official@gmail.com</a>
-            </p>
-            <button id="mvpAcceptBtn" class="mvp-agree-btn">I Agree & Proceed <i class="fa-solid fa-arrow-right"></i></button>
-        </div>
-    </div>
-
     <div id="authGate">
         <div class="gate-box">
-            <i class="fa-solid fa-building-columns" style="font-size: 3rem; color: var(--brand-primary);"></i>
-            <h2 style="margin-top:24px; font-size: 1.4rem; color: var(--brand-dark); font-weight:700;">Academic Operations Login</h2>
-            <p style="color:var(--text-muted); font-size:0.9rem; margin-top: 6px;">Enter administrative credentials to continue</p>
+            <i class="fa-solid fa-building-columns" style="font-size: 2.5rem; color: var(--brand-primary);"></i>
+            <h2 style="margin-top:16px; font-size: 1.3rem; color: var(--brand-dark); font-weight:700;">Academic Operations Login</h2>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top: 4px;">Enter administrative credentials to continue</p>
             <input type="password" id="passcodeField" class="gate-input" placeholder="••••••••">
             <button id="verifyPortalBtn" class="gate-btn">Verify Portal Authority</button>
         </div>
@@ -105,33 +104,36 @@
 
     <header>
         <div class="logo-group">
-            <img src="SCOP.webp" alt="SCOP Logo" class="logo-img">
-            <div class="header-divider"></div>
+            <div class="logo-container">
+                <img src="SCOP.webp" alt="SCOP Logo" class="logo-img">
+                <div style="height: 32px; width: 1px; background: var(--border);" class="hidden-mobile"></div>
+                <img src="SBG.webp" alt="SBG Logo" class="logo-img">
+            </div>
             <div class="header-title">
                 <h1>Sagar College of Pharmacy</h1>
                 <p>Office of Institutional Registry</p>
             </div>
         </div>
-        <img src="SBG.webp" alt="SBG Logo" class="logo-img">
     </header>
 
     <main>
-        <!-- Form Panel -->
         <div class="card">
             <div class="card-title"><i class="fa-solid fa-user-plus" style="color:var(--brand-primary);"></i> Matriculate New Student</div>
             <form id="studentRegistrationForm">
                 <div class="form-grid">
                     <div class="form-group"><label>University Roll No</label><input type="text" id="regRoll" placeholder="e.g. SCOP-2026-001" required></div>
                     <div class="form-group"><label>Full Legal Name</label><input type="text" id="regName" placeholder="e.g. Arjun Patil" required></div>
-                    <div class="form-group"><label>Assigned Section</label><input type="text" id="regSection" placeholder="e.g. Section A" required></div>
                     <div class="form-group">
-                        <label>Academic Year</label>
+                        <label>Academic Semester</label>
                         <select id="regYear" required>
-                            <option value="1st Year">1st Year</option>
-                            <option value="2nd Year" selected>2nd Year</option>
-                            <option value="3rd Year">3rd Year</option>
-                            <option value="4th Year">4th Year</option>
-                            <option value="Diploma">Diploma</option>
+                            <option value="1st Sem">1st Semester</option>
+                            <option value="2nd Sem">2nd Semester</option>
+                            <option value="3rd Sem" selected>3rd Semester</option>
+                            <option value="4th Sem">4th Semester</option>
+                            <option value="5th Sem">5th Semester</option>
+                            <option value="6th Sem">6th Semester</option>
+                            <option value="7th Sem">7th Semester</option>
+                            <option value="8th Sem">8th Semester</option>
                         </select>
                     </div>
                     <button type="submit" id="submitNewStudentBtn" class="submit-btn"><i class="fa-solid fa-graduation-cap"></i> Complete Record</button>
@@ -139,27 +141,37 @@
             </form>
         </div>
 
-        <!-- Historical Ledger System Lookup Panel -->
         <div class="card">
             <div class="card-title"><i class="fa-solid fa-clock-rotate-left" style="color:var(--brand-primary);"></i> Historical Attendance Ledger</div>
             <div class="directory-controls">
-                <div class="form-group" style="flex: 1; min-width: 200px; gap:4px;">
-                    <label style="font-size:0.75rem;">Select Calendar Date</label>
-                    <input type="date" id="historyDatePicker" style="background:#fff; padding:10px 14px; width:100%;">
+                <div class="form-group" style="flex: 1; width:100%;">
+                    <label>Select Calendar Date</label>
+                    <input type="date" id="historyDatePicker">
                 </div>
-                <div class="form-group" style="width:240px; gap:4px;">
-                    <label style="font-size:0.75rem;">Select Academic Cohort</label>
-                    <select id="historyYearFilter" class="filter-select" style="width:100%;">
-                        <option value="1st Year">1st Year</option>
-                        <option value="2nd Year" selected>2nd Year</option>
-                        <option value="3rd Year">3rd Year</option>
-                        <option value="4th Year">4th Year</option>
-                        <option value="Diploma">Diploma</option>
+                <div class="form-group" style="width:100%;">
+                    <label>Select Target Subject</label>
+                    <select id="historySubjectFilter" class="filter-select">
+                        <option value="POC III">POC III</option>
+                        <option value="Med Chem">Med Chem</option>
+                        <option value="PP II">PP II</option>
+                        <option value="P Col I">P Col I</option>
+                        <option value="P Cog I">P Cog I</option>
                     </select>
                 </div>
-                <div class="form-group" style="justify-content: flex-end; padding-bottom: 2px;">
-                    <button type="button" id="fetchHistoryBtn" class="submit-btn" style="background:var(--brand-dark); padding: 12px 24px;"><i class="fa-solid fa-magnifying-glass"></i> Search Ledger</button>
+                <div class="form-group" style="width:100%;">
+                    <label>Select Semester</label>
+                    <select id="historyYearFilter" class="filter-select">
+                        <option value="1st Sem">1st Semester</option>
+                        <option value="2nd Sem">2nd Semester</option>
+                        <option value="3rd Sem" selected>3rd Semester</option>
+                        <option value="4th Sem">4th Semester</option>
+                        <option value="5th Sem">5th Semester</option>
+                        <option value="6th Sem">6th Semester</option>
+                        <option value="7th Sem">7th Semester</option>
+                        <option value="8th Sem">8th Semester</option>
+                    </select>
                 </div>
+                <button type="button" id="fetchHistoryBtn" class="submit-btn" style="background:var(--brand-dark);"><i class="fa-solid fa-magnifying-glass"></i> Search Ledger</button>
             </div>
             <div class="table-wrap">
                 <table>
@@ -167,33 +179,34 @@
                         <tr>
                             <th>Roll Number</th>
                             <th>Student Name</th>
-                            <th>Section</th>
-                            <th>Target Date Logged</th>
+                            <th>Target Subject</th>
                             <th>Recorded Status</th>
                         </tr>
                     </thead>
                     <tbody id="historyTableBody">
-                        <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:20px;">Choose a date and click search to pull history logs.</td></tr>
+                        <tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:20px;">Choose parameters and search to pull history logs.</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Directory Management Panel -->
         <div class="card">
             <div class="card-title"><i class="fa-solid fa-address-book" style="color:var(--brand-primary);"></i> Student Directory Ledger</div>
             <div class="directory-controls">
                 <div class="search-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="dirSearchBox" class="search-box" placeholder="Filter by student name or record number...">
+                    <input type="text" id="dirSearchBox" class="search-box" placeholder="Filter by student details...">
                 </div>
                 <select id="dirYearFilter" class="filter-select">
-                    <option value="All Years">All Academic Cohorts</option>
-                    <option value="1st Year">1st Year</option>
-                    <option value="2nd Year">2nd Year</option>
-                    <option value="3rd Year">3rd Year</option>
-                    <option value="4th Year">4th Year</option>
-                    <option value="Diploma">Diploma</option>
+                    <option value="All Years">All Semesters</option>
+                    <option value="1st Sem">1st Semester</option>
+                    <option value="2nd Sem">2nd Semester</option>
+                    <option value="3rd Sem">3rd Semester</option>
+                    <option value="4th Sem">4th Semester</option>
+                    <option value="5th Sem">5th Semester</option>
+                    <option value="6th Sem">6th Semester</option>
+                    <option value="7th Sem">7th Semester</option>
+                    <option value="8th Sem">8th Semester</option>
                 </select>
             </div>
             <div class="table-wrap">
@@ -202,9 +215,9 @@
                         <tr>
                             <th>Roll Number</th>
                             <th>Student Name</th>
-                            <th>Section</th>
-                            <th>Academic Cohort</th>
-                            <th style="text-align:center; width: 100px;">Actions</th>
+                            <th>Semester</th>
+                            <th>Attendance Metrics</th>
+                            <th style="text-align:center; width: 80px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="directoryTableBody"></tbody>
@@ -213,7 +226,14 @@
         </div>
     </main>
 
-    <footer>All Rights Reserved | Sagar College of Pharmacy | 2026 Developed by PixelWeb</footer>
+    <footer>
+        <div class="footer-copyright">
+            &copy; 2026 Sagar College of Pharmacy. All Rights Reserved.
+        </div>
+        <div class="footer-credit">
+            Designed & Developed by STEM Globe matrix
+        </div>
+    </footer>
 
     <script>
         document.getElementById('historyDatePicker').value = new Date().toISOString().split('T')[0];
@@ -221,7 +241,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, deleteDoc, collection, query, where, getDocs, getDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, deleteDoc, collection, query, where, getDocs, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBljkKXqZtGH-tY5ucY6XyUFJxy428BMgU",
@@ -236,49 +256,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Core Global Sensing System Pipe
-        async function logGlobalAction(type, msg) {
-            try {
-                const lid = "log_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
-                await setDoc(doc(db, "system_logs", lid), {
-                    sourcePanel: "Admin Portal",
-                    eventType: type.toUpperCase(),
-                    message: msg,
-                    timestamp: serverTimestamp()
-                });
-            } catch(ex) { console.error(ex); }
-        }
-
-        // MVP Portal Gateway Acknowledgement Handler
-        document.getElementById("mvpAcceptBtn").addEventListener("click", () => {
-            logGlobalAction("SECURITY", "Operator read and accepted STEM Globe Technologies MVP Phase warning terms.");
-            document.getElementById("mvpShieldOverlay").style.display = "none";
-        });
-
-        // Global Dynamic UI Click Tracker
-        window.addEventListener("click", (e) => {
-            let targetDesc = e.target.tagName;
-            if(e.target.id) targetDesc += ` (ID: #${e.target.id})`;
-            else if(e.target.className) targetDesc += ` (Class: .${e.target.className.split(' ')[0]})`;
-            
-            const textContent = e.target.innerText ? ` "${e.target.innerText.substring(0,25).replace(/\n/g, '')}"` : "";
-            logGlobalAction("CLICK", `User clicked element: <${targetDesc}>${textContent}`);
-        }, true);
-
-        // Input monitoring for passcode authentication flow
-        document.getElementById("passcodeField").addEventListener("input", (e) => {
-            logGlobalAction("CLICK", `Typing passcode entry... current input length: ${e.target.value.length}`);
-        });
-
-        // Login Authentication Tracking
         document.getElementById("verifyPortalBtn").addEventListener("click", () => {
             const pass = document.getElementById('passcodeField').value;
             if(pass === 'SCOP-2026') {
-                logGlobalAction("SECURITY", "SUCCESSFUL ADMIN PORTAL GATE VERIFICATION CORRIDOR ACCEPTED");
                 document.getElementById('authGate').style.display = 'none';
             } else { 
-                logGlobalAction("SECURITY", `FAILED LOGIN ATTEMPT: Incorrect credential pass provided ("${pass}")`);
-                alert('Access Denied: Invalid administrative passcode.'); 
+                 alert('Access Denied: Invalid passcode.'); 
             }
         });
 
@@ -293,55 +276,47 @@
             });
         }
 
-        document.getElementById("dirSearchBox").addEventListener("input", (e) => {
-            applyDirectoryFilters();
-            logGlobalAction("CHANGE", `Directory search query targeted to filter: "${e.target.value}"`);
-        });
-        
-        document.getElementById("dirYearFilter").addEventListener("change", (e) => {
-            applyDirectoryFilters();
-            logGlobalAction("CHANGE", `Directory filter altered to year cohort dropdown selection: "${e.target.value}"`);
-        });
+        document.getElementById("dirSearchBox").addEventListener("input", applyDirectoryFilters);
+        document.getElementById("dirYearFilter").addEventListener("change", applyDirectoryFilters);
 
-        // Historical Ledger Search Tracking
         document.getElementById("fetchHistoryBtn").addEventListener("click", async () => {
             const targetDate = document.getElementById("historyDatePicker").value; 
             const targetYear = document.getElementById("historyYearFilter").value;
+            const targetSubject = document.getElementById("historySubjectFilter").value;
             const hBody = document.getElementById("historyTableBody");
-            
-            if(!targetDate) return alert("Select a target lookup date.");
-            logGlobalAction("SUBMIT", `Executing query for historical ledger on date: ${targetDate} for selection: ${targetYear}`);
-            hBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px;">Fetching historical system metrics...</td></tr>`;
-            
+                        
+            if(!targetDate) return alert("Select a lookup date.");
+            hBody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px;">Fetching logs...</td></tr>`;
+                        
             try {
                 const studentsQuery = query(collection(db, "students"), where("year", "==", targetYear));
                 const snapshot = await getDocs(studentsQuery);
-                
+                                
                 if(snapshot.empty) {
-                    hBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px;">No students tracked in this cohort.</td></tr>`;
+                    hBody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px;">No students found.</td></tr>`;
                     return;
                 }
-                
+                                
                 hBody.innerHTML = "";
                 for(let studentDoc of snapshot.docs) {
                     const s = studentDoc.data();
-                    const attnRef = doc(db, "students", s.rollNo, "attendance", targetDate);
+                    const compositeKey = `${targetDate}_${targetSubject}`;
+                    const attnRef = doc(db, "students", s.rollNo, "attendance", compositeKey);
                     const attnSnap = await getDoc(attnRef);
-                    
-                    let finalStatus = "No Data Run";
+                                        
+                    let finalStatus = "No Data";
                     let badgeClass = "badge nodata";
-                    
+                                        
                     if(attnSnap.exists()) {
                         finalStatus = attnSnap.data().status === "Active" ? "Present" : "Absent";
                         badgeClass = attnSnap.data().status === "Active" ? "badge active" : "badge absent";
                     }
-                    
+                                        
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td><strong style="color:var(--brand-primary);">${s.rollNo}</strong></td>
                         <td style="font-weight:600;">${s.name}</td>
-                        <td>${s.classSection}</td>
-                        <td>${targetDate}</td>
+                        <td style="font-weight:600; color:var(--brand-dark);">${targetSubject}</td>
                         <td><span class="${badgeClass}">${finalStatus}</span></td>
                     `;
                     hBody.appendChild(tr);
@@ -349,17 +324,14 @@
             } catch(e) { alert("Error pulling logs: " + e.message); }
         });
 
-        // Student Registration Tracking
         document.getElementById('studentRegistrationForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const roll = document.getElementById('regRoll').value.trim().toUpperCase();
             const name = document.getElementById('regName').value.trim();
-            logGlobalAction("SUBMIT", `Submitting registration database entry payload for ${name} (${roll})`);
             try {
                 await setDoc(doc(db, "students", roll), {
                     rollNo: roll,
                     name: name,
-                    classSection: document.getElementById('regSection').value.trim(),
                     year: document.getElementById('regYear').value
                 });
                 document.getElementById('studentRegistrationForm').reset();
@@ -369,29 +341,52 @@
         onSnapshot(query(collection(db, "students")), (snapshot) => {
             const tbody = document.getElementById('directoryTableBody');
             tbody.innerHTML = "";
-            snapshot.forEach(studentDoc => {
+            snapshot.forEach(async (studentDoc) => {
                 const s = studentDoc.data();
                 const tr = document.createElement('tr');
                 tr.classList.add("directory-row");
                 tr.setAttribute("data-year", s.year);
                 tr.setAttribute("data-search-token", `${s.name.toLowerCase()} ${s.rollNo.toLowerCase()}`);
+                
                 tr.innerHTML = `
                     <td><strong style="color:var(--brand-primary);">${s.rollNo}</strong></td>
                     <td style="font-weight: 600;">${s.name}</td>
-                    <td>${s.classSection}</td>
                     <td><span style="font-weight:500; color: var(--text-muted);">${s.year}</span></td>
+                    <td id="stats_${s.rollNo}"><span style="color:var(--text-muted); font-size:0.85rem;">Calculating...</span></td>
                     <td style="text-align:center;"><button class="trash-btn"><i class="fa-solid fa-trash-can"></i></button></td>
                 `;
+                
                 tr.querySelector('.trash-btn').addEventListener('click', async () => {
-                    logGlobalAction("SECURITY", `CRITICAL: Intent triggered to delete student record matrix: ${s.name} (${s.rollNo})`);
-                    if(confirm(`Remove database ledger entry for ${s.name}?`)) {
+                    if(confirm(`Remove entry for ${s.name}?`)) {
                         await deleteDoc(doc(db, "students", s.rollNo));
-                        logGlobalAction("SECURITY", `SUCCESSFUL: Erased student entry ledger for ${s.name}`);
                     }
                 });
                 tbody.appendChild(tr);
+
+                try {
+                    const collectionRef = collection(db, "students", s.rollNo, "attendance");
+                    const snapshotData = await getDocs(collectionRef);
+                    let presentCount = 0;
+                    let absentCount = 0;
+                    
+                    snapshotData.forEach(docLog => {
+                        if(docLog.data().status === "Active") presentCount++;
+                        else if(docLog.data().status === "Absent") absentCount++;
+                    });
+
+                    const statsContainer = document.getElementById(`stats_${s.rollNo}`);
+                    if (statsContainer) {
+                        statsContainer.innerHTML = `
+                            <span class="stat-pill present">P: ${presentCount}</span>
+                            <span class="stat-pill absent">A: ${absentCount}</span>
+                        `;
+                    }
+                } catch(err) {
+                    const statsContainer = document.getElementById(`stats_${s.rollNo}`);
+                    if (statsContainer) statsContainer.innerHTML = `<span style="color:var(--brand-gold);">Error</span>`;
+                }
             });
-            applyDirectoryFilters();
+            setTimeout(applyDirectoryFilters, 300);
         });
     </script>
 </body>
