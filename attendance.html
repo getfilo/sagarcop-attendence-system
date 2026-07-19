@@ -195,8 +195,8 @@
                 <select id="yearSelector" class="selector-box">
                     <option value="1st Sem">1st Semester</option>
                     <option value="2nd Sem">2nd Semester</option>
-                    <option value="3rd Sem" selected>3rd Semester</option>
-                    <option value="4th Sem">4th Semester</option>
+                    <option value="3rd Sem">3rd Semester</option>
+                    <option value="4th Sem"selected>4th Semester</option>
                     <option value="5th Sem">5th Semester</option>
                     <option value="6th Sem">6th Semester</option>
                     <option value="7th Sem">7th Semester</option>
@@ -275,11 +275,11 @@
         let localSubjectsRegistry = {};
 
         const baselineSubjects = [
-            { id: "scop01", code: "scop01", label: "POC III", name: "Ms. Gayatri Patil", semester: "3rd Sem" },
-            { id: "scop02", code: "scop02", label: "Med Chem", name: "Ms. Trupti Talwar", semester: "3rd Sem" },
-            { id: "scop03", code: "scop03", label: "PP II", name: "Mr. Akshay S Killedar", semester: "3rd Sem" },
-            { id: "scop04", code: "scop04", label: "P Col I", name: "Mrs. Chaitanya B", semester: "3rd Sem" },
-            { id: "scop05", code: "scop05", label: "P Cog I", name: "Dr. Kiran Kumar Hullatti", semester: "3rd Sem" }
+            { id: "scop01", code: "scop01", label: "POC III", name: "Ms. Gayatri Patil", semester: "4th Sem" },
+            { id: "scop02", code: "scop02", label: "Med Chem", name: "Ms. Trupti Talwar", semester: "4th Sem" },
+            { id: "scop03", code: "scop03", label: "PP II", name: "Mr. Akshay S Killedar", semester: "4th Sem" },
+            { id: "scop04", code: "scop04", label: "P Col I", name: "Mrs. Chaitanya B", semester: "4th Sem" },
+            { id: "scop05", code: "scop05", label: "P Cog I", name: "Dr. Kirankumar Hullatti", semester: "4th Sem" }
         ];
 
         onSnapshot(collection(db, "subjects"), (snapshot) => {
